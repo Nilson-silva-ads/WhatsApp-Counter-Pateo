@@ -1,0 +1,54 @@
+from pathlib import Path
+import re
+
+
+arquivo_path = Path("C:/Users/neojb/Desktop/Programaçao/Projetos/Projeto_contador_carros\whatsapp-photo-counter/data/Conversa do WhatsApp com Pateo Express RECIFE..txt")
+
+
+data_mes = '12/2025'
+padrao = r'[A-Z]{3}-?\d[A-Z]\d{2}'
+padrao_midia = r'Mídia'
+
+
+
+#Faz a leitura das fotos po dia.
+def carros_dia():
+    soma=0
+    #data_dia = str(input('Qual o dia?: '))
+    data_dia = '18/12/2025'
+    with open(arquivo_path, 'r', encoding='utf-8') as arquivo: #Abre o aquivo para leitura das fotos.
+            for numero, linha in enumerate(arquivo):
+                placa_encontrada = re.search(padrao, linha)
+                midia = re.search(padrao_midia, linha)
+                if data_dia in linha:
+                    if midia  or placa_encontrada:
+                        print(linha)
+                        soma += 1
+    
+    if soma == 0:
+        print(f'Não houve carros nesse dia.')
+    else:
+         print( f"Total de carros realizados no dia {data_dia} foram {soma}" )
+
+#função para executar a contagem de veiculos por mes.
+def carros_mes(data_mes):
+    soma=0
+    with open(arquivo_path, 'r', encoding='utf-8') as arquivo:
+        for numero, linha in enumerate(arquivo):
+            placa_encontrada = re.search(padrao, linha)
+            midia = re.search(padrao_midia, linha)
+            if data_mes in linha:
+                if midia or placa_encontrada :
+                    soma+=1
+    
+    if soma == 0:
+     print('Não houve carros nesse mes.')
+    else:
+     print(f"Foram lavados {soma} carros nesse mes.")
+
+
+
+
+#teste
+carros_dia()
+carros_mes(data_mes)
