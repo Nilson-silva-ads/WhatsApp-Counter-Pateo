@@ -8,6 +8,8 @@ class ContadorModel:
         self.padrao_placa = r'[A-Z]{3}-?\d[A-Z]\d{2}'
         self.padrao_midia = r'Mídia'
         self.padrao_data = r'^(\d{2}/\d{2}/\d{4})' #regex para capturar a data no inicio da linha.
+        
+       
 
     def converter_para_data(self, data_texto):
         """Tenta converter uma string DD/MM/AAAA em objeto datetime."""
