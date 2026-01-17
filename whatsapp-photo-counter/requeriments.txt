@@ -1,0 +1,8 @@
+# Bibliotecas principais para a interface e visualização
+streamlit
+
+# Manipulação de dados e geração de gráficos
+pandas
+
+# Dependência opcional para melhor processamento de datas se necessário
+python-dateutil
