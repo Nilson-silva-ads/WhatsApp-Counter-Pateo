@@ -1,6 +1,7 @@
 import streamlit as st
 from src.models import ContadorModel
 import os
+import pandas as pd 
 
 st.set_page_config(page_title="Pateo Counter", page_icon="🚗")
 
@@ -34,6 +35,23 @@ if st.button("Buscar", type="primary"):
             if dados is not None:
                 total = len(dados)
                 st.success(f"### ✅ Total: {total} carros Lavados ")
+
+                if len(dados) == 0:
+                    st.error("Data não existe no arquivo ou não houve lavagem nesta data.")
+
+                #Criando um grafico para os dados.
+                #transformando lista de dados em um DataFrame(tablea)
+                df = pd.DataFrame(dados, columns=['Data'])
+
+                #converter para um formato de data real caso não estaje.
+                #df['Data'] = pd.to_datetime(df['Data']).dt.date
+
+                #contamos quantas vezes cada data aparece.
+                contagem_por_dia = df['Data'].value_counts().sort_index()
+
+                #exibindo o grafico de barras.
+                st.subheader("📊 Lavagens por Dia")
+                st.bar_chart(contagem_por_dia)
                 
             else:
                 st.error("Erro ao processar os dados. Verificar o formato das datas.")
