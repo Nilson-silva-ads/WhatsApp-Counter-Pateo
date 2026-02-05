@@ -43,15 +43,19 @@ if st.button("Buscar", type="primary"):
                 #transformando lista de dados em um DataFrame(tablea)
                 df = pd.DataFrame(dados, columns=['Data'])
 
+                #Extraindo apenas o que parece data e hora do inicio.
+                #O regex pega "dd/mm/AAAA" do inicio.
+                df['Data'] = df["Data"].str.extract(r'^(\d{2}/\d{2}/\d{4})')
+
                 #converter para um formato de data real caso não estaje.
-                #df['Data'] = pd.to_datetime(df['Data']).dt.date
+                df['Data'] = pd.to_datetime(df['Data'], dayfirst=True)
 
                 #contamos quantas vezes cada data aparece.
                 contagem_por_dia = df['Data'].value_counts().sort_index()
 
                 #exibindo o grafico de barras.
                 st.subheader("📊 Lavagens por Dia")
-                st.bar_chart(contagem_por_dia)
+                st.line_chart(contagem_por_dia)
                 
             else:
                 st.error("Erro ao processar os dados. Verificar o formato das datas.")
